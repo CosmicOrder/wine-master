@@ -4,6 +4,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+FOUNDATION_DATE = 1920
 
 def main(template):
     wine_df = pd.read_excel('wine.xlsx', keep_default_na=False)
@@ -13,7 +14,7 @@ def main(template):
     for i in wine_dict:
         new_dict.setdefault(i['Категория'], []).append(i)
 
-    total_age = datetime.datetime.today().year - 1920
+    total_age = datetime.datetime.today().year - FOUNDATION_DATE
     if str(total_age)[-1] == '1' \
             and str(total_age)[-2:] not in ['11', '12', '13', '14']:
         years = 'год'
