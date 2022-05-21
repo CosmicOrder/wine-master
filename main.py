@@ -14,17 +14,17 @@ def main(template):
     for i in wine_dict:
         new_dict.setdefault(i['Категория'], []).append(i)
 
-    total_age = datetime.datetime.today().year - FOUNDATION_DATE
-    if str(total_age)[-1] == '1' \
-            and str(total_age)[-2:] not in ['11', '12', '13', '14']:
-        years = 'год'
-    elif str(total_age)[-1] in ['2', '3', '4'] \
-            and str(total_age)[-2:] not in ['11', '12', '13', '14']:
-        years = 'года'
+    company_age = datetime.datetime.today().year - FOUNDATION_DATE
+    if str(company_age)[-1] == '1' \
+            and str(company_age)[-2:] not in ['11', '12', '13', '14']:
+        age = 'год'
+    elif str(company_age)[-1] in ['2', '3', '4'] \
+            and str(company_age)[-2:] not in ['11', '12', '13', '14']:
+        age = 'года'
     else:
-        years = 'лет'
+        age = 'лет'
 
-    rendered_page = template.render(age=total_age, years=years,
+    rendered_page = template.render(company_age=company_age, age=age,
                                     wine_data=new_dict)
 
     with open('index.html', 'w', encoding='utf-8') as file:
