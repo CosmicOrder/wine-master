@@ -15,9 +15,9 @@ def main():
     wines_from_excel_df = pd.read_excel('wine.xlsx', keep_default_na=False)
     wines_from_excel = wines_from_excel_df.to_dict(orient='records')
 
-    wines_for_site = {}
+    wines = {}
     for wine_from_excel in wines_from_excel:
-        wines_for_site.setdefault(wine_from_excel['Категория'], []) \
+        wines.setdefault(wine_from_excel['Категория'], []) \
             .append(wine_from_excel)
 
     company_age = datetime.datetime.today().year - FOUNDATION_DATE
@@ -31,7 +31,7 @@ def main():
         age = 'лет'
 
     rendered_page = template.render(company_age=company_age, age=age,
-                                    wines=wines_for_site)
+                                    wines=wines)
 
     with open('index.html', 'w', encoding='utf-8') as file:
         file.write(rendered_page)
