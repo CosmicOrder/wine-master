@@ -7,13 +7,17 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 FOUNDATION_DATE = 1920
 
 
-def main(template):
+def main():
+    env = Environment(loader=FileSystemLoader(''),
+                      autoescape=select_autoescape(['html', 'xml']))
+    template = env.get_template('template.html')
+
     wines_from_excel_df = pd.read_excel('wine.xlsx', keep_default_na=False)
     wines_from_excel = wines_from_excel_df.to_dict(orient='records')
 
     wines_for_site = {}
     for wine_from_excel in wines_from_excel:
-        wines_for_site.setdefault(wine_from_excel['Категория'], [])\
+        wines_for_site.setdefault(wine_from_excel['Категория'], []) \
             .append(wine_from_excel)
 
     company_age = datetime.datetime.today().year - FOUNDATION_DATE
@@ -32,12 +36,9 @@ def main(template):
     with open('index.html', 'w', encoding='utf-8') as file:
         file.write(rendered_page)
 
-
-if __name__ == '__main__':
-    env = Environment(loader=FileSystemLoader(''),
-                      autoescape=select_autoescape(['html', 'xml']))
-    template = env.get_template('template.html')
-    main(template)
-
     server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
     server.serve_forever()
+
+
+if __name__ == '__main__':
+    main()
