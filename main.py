@@ -1,4 +1,5 @@
 import datetime
+import os
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 import pandas as pd
@@ -12,7 +13,9 @@ def main():
                       autoescape=select_autoescape(['html', 'xml']))
     template = env.get_template('template.html')
 
-    wines_from_excel_df = pd.read_excel('wine.xlsx', keep_default_na=False)
+    wine_path = os.getenv('WINE_PATH', default='wine.xlsx')
+
+    wines_from_excel_df = pd.read_excel(wine_path, keep_default_na=False)
     wines_from_excel = wines_from_excel_df.to_dict(orient='records')
 
     wines = {}
