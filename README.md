@@ -22,6 +22,22 @@
 Установите зависимости командой: 
 
     pip install -r requirements.txt
+
+Задайте путь до файла с даннами в переменную окружения WINE_PATH. 
+
+- для Windows:
+
+      set WINE_PATH="/path/to/wine.xlsx"
+    
+- для Linux:
+
+      export WINE_PATH="/path/to/wine.xlsx" 
+    
+
+В противном случае переменной окружения будет присвоено дефолтное значение:
+
+    WINE_PATH="./wine.xlsx" 
+
 Запустите сайт:
 
     python3 main.py
